@@ -126,7 +126,7 @@ if(checkValidate){
     <html>
     <head>
         <title>mgsformvalidation</title>
-        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.0/dist/mgsformvalidation.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.1/dist/mgsformvalidation.min.js"></script>
     </head>
     <body>
         <!--  write a class, id and and attribute are same as "class="name" id="name" name="name""-->
