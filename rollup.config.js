@@ -4,9 +4,9 @@ import { terser } from 'rollup-plugin-terser';
 export default {
   input: 'src/index.js',
   output: {
-    file: 'dist/mgsFormValidation.min.js',
+    file: 'dist/mgsformvalidation.min.js',
     format: 'umd',
-    name: 'mgsFormValidation',
+    name: 'mgsformvalidation',
   },
   plugins: [
     babel({ babelHelpers: 'bundled' }),
