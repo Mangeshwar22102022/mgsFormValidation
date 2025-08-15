@@ -1,6 +1,6 @@
 {
   "name": "mgsformvalidation",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Form validate like require field check empty by class or id name ",
   "keywords": [
     "mgsformvalidation"
