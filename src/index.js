@@ -204,9 +204,9 @@ function mgsKeyupChange(_mgsFrmAllClass) {
 }
 
 function mgsFormValidate(byNames = null, sameClass = null, byClassId = null) {
-    _mgsFrmbyNames = byNames?.split(',') ?? [];
-    _mgsFrmsameClass = sameClass?.split(',') ?? [];
-    _mgsFrmbyClassId = byClassId?.split(',') ?? [];
+    let _mgsFrmbyNames = byNames?.split(',') ?? [];
+    let _mgsFrmsameClass = sameClass?.split(',') ?? [];
+    let _mgsFrmbyClassId = byClassId?.split(',') ?? [];
 
     let _mgsFrmcheck = true;
     let _mgsCheckMail = _msgFrmIsEmailCheck?.split(',')?.map(dd => dd?.substring(1));
