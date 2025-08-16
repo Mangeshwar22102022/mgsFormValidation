@@ -126,7 +126,7 @@ Submits form data via fetch, with a loader, error handling, and redirect.
 ```
     Example:
 
-    Note:  When form submition time get any errors 
+    Note:  When the form is submitted and errors are returned, display them
 
     Error response - 
     {
@@ -145,13 +145,36 @@ Submits form data via fetch, with a loader, error handling, and redirect.
     mgsValidateEmail('.email, .emails');
 
     if (mgsFormValidate(selector)) {
+
+        1- Usage Example: Stay on the Same Page
+
+        If you want to stay on the same page after form submission, simply omit the returnUrl or leave it blank.
+        The form will reset, and no redirection will occur.
+
         msgSubmitData({
             url: 'http://localhost/mgs/user-add',     // API endpoint
-            returnUrl: 'http://localhost/mgs/user',   // Redirect URL after success
-            formId: '$myForm',                        // Form selector
+            formId: '#myForm',                        // Form selector
             formData: {},                             // FormData object
             methodType: 'post'                        // Optional (default is 'post')
         });
+
+
+        returnUrl is optional. If not provided, the user will stay on the same page.
+
+        2 - Usage Example: Redirect to Another Page
+
+        If you want to redirect to another page after successful form submission, provide the returnUrl.
+
+        msgSubmitData({
+            url: 'http://localhost/mgs/user-add',     // API endpoint
+            returnUrl: 'http://localhost/mgs/user',   // Redirect URL after success
+            formId: '#myForm',                        // Form selector
+            formData: {},                             // FormData object
+            methodType: 'post'                        // Optional (default is 'post')
+        });
+
+
+        After successful submission, the user will be redirected to the URL provided in returnUrl.
     }
 ```
 
@@ -169,7 +192,7 @@ Submits form data via fetch, with a loader, error handling, and redirect.
     <html>
     <head>
         <title>mgsFormValidation</title>
-        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.5/dist/mgsformvalidation.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.6/dist/mgsformvalidation.min.js"></script>
     </head>
     <body>
         <form method="post" action="javascript:void(0)" id="myForm" enctype="multipart/form-data">
@@ -202,7 +225,7 @@ Submits form data via fetch, with a loader, error handling, and redirect.
                     let form_data = new FormData(this);
                     msgSubmitData({
                         url: 'http://localhost/mgs/user-add',
-                        returnUrl: 'http://localhost/mgs/user',
+                        returnUrl: 'http://localhost/mgs/user',  // Optional — provide this only if you want to redirect to another page after successful submission.
                         formId: '$myForm',
                         formData: form_data,
                         methodType: 'post'
@@ -260,7 +283,7 @@ npm install mgsformvalidation
                     let form_data = new FormData(this);
                     msgSubmitData({
                         url: 'http://localhost/mgs/user-add',
-                        returnUrl: 'http://localhost/mgs/user',
+                        returnUrl: 'http://localhost/mgs/user', // Optional — provide this only if you want to redirect to another page after successful submission.
                         formId: '$myForm',
                         formData: form_data,
                         methodType: 'post'
