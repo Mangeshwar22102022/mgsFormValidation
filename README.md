@@ -1,4 +1,4 @@
-# 🧪 mgsformvalidation
+# mgsformvalidation
 
 A lightweight JavaScript form validation and utility library for quick **input validation**, **event handling**, and **form submission** with built-in error handling - all with minimal setup and no external dependencies..
 
