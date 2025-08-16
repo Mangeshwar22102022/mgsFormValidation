@@ -1,6 +1,6 @@
 # 🧪 mgsformvalidation
 
-A lightweight JavaScript library form validation and utility library for quick **input validation**, **event handling**, and **form submission** with built-in error handling - all with minimal setup and no external dependencies..
+A lightweight JavaScript form validation and utility library for quick **input validation**, **event handling**, and **form submission** with built-in error handling - all with minimal setup and no external dependencies..
 
 All functions are globally accessible via window.
 
