@@ -88,7 +88,7 @@ function mgsa2Z(allClass) {
     });
 }
 
-function mgsisValidEmail(email) {
+function mgsIsValidEmail(email) {
     const pattern = /^[^\s@]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/;
     return pattern.test(email.trim());
 }
@@ -103,16 +103,19 @@ function validateField(el, isName=false) {
     document.querySelectorAll(`.${errorClass2}`).forEach(e => e.remove());
 
     el.classList.remove('is-invalid', 'is-valid');
-
-    if (!mgsisValidEmail(el.value)) {
+    const emailVal = (el.value || "").trim();
+    if (!emailVal) {
         el.classList.add('is-invalid');
-        el.insertAdjacentHTML(
-            'afterend',
-            `<div style="font-size:0.875em; color:red;" class="${errorClass1}" id="${errorClass1}">Please enter a valid email address</div>`
-        );
+        el.insertAdjacentHTML( 'afterend', `<div style="font-size:0.875em; color:red;" class="${errorClass1}" id="${errorClass1}">This field is required</div>` );
         return false;
     } else {
-        el.classList.add('is-valid');
+        if (!mgsIsValidEmail(emailVal)) {
+            el.classList.add('is-invalid');
+            el.insertAdjacentHTML( 'afterend', `<div style="font-size:0.875em; color:red;" class="${errorClass1}" id="${errorClass1}">Please enter a valid email address</div>` );
+            return false;
+        }else{
+            el.classList.add('is-valid');
+        }
         return true;
     }
 }
@@ -138,7 +141,7 @@ function mgsValidateEmail(allClass) {
     };
 }
 
-function mgsKeyupChange(_mgsFrmAllClass) {
+function mgsCheckRequired(_mgsFrmAllClass) {
     const _mgsFrmFields = document.querySelectorAll(_mgsFrmAllClass);
 
     _mgsFrmFields.forEach(_mgsFrmField => {
@@ -146,15 +149,15 @@ function mgsKeyupChange(_mgsFrmAllClass) {
             const _mgsFrmFldName = _mgsFrmField.name;
             const mgsFrmIdName = _mgsFrmField.id;
             const _mgsFrmFieldName = (_mgsFrmFldName !== '') ? _mgsFrmFldName : mgsFrmIdName;
-            const __mgsFrmFieldName1 = '_mgs_'+_mgsFrmFieldName+'_error';
+            const _mgsFrmFieldName1 = '_mgs_'+_mgsFrmFieldName+'_error';
             // Remove old error messages
             document.querySelectorAll(`.${_mgsFrmFieldName}_error`).forEach(el => el.remove());
-            document.querySelectorAll(`._${__mgsFrmFieldName1}`).forEach(el => el.remove());
+            document.querySelectorAll(`._${_mgsFrmFieldName1}`).forEach(el => el.remove());
 
             _mgsFrmField.classList.remove('is-invalid', 'is-valid');
             const value = (_mgsFrmField.value || "").trim();
             if (!value) {
-                _mgsFrmField.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${_mgsFrmFieldName}_error" id="${_mgsFrmFieldName}_error">This field is required!</div>`);
+                _mgsFrmField.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${_mgsFrmFieldName}_error" id="${_mgsFrmFieldName}_error">This field is required</div>`);
                 _mgsFrmField.classList.add('is-invalid');
             } else {
                 _mgsFrmField.classList.add('is-valid');
@@ -165,24 +168,24 @@ function mgsKeyupChange(_mgsFrmAllClass) {
             const _mgsFrmFldName = _mgsFrmField.name;
             const mgsFrmIdName = _mgsFrmField.id;
             const _mgsFrmFieldName = (_mgsFrmFldName !== '') ? _mgsFrmFldName : mgsFrmIdName;
-            const __mgsFrmFieldName1 = '_mgs_'+_mgsFrmFieldName+'_error';
+            const _mgsFrmFieldName1 = '_mgs_'+_mgsFrmFieldName+'_error';
 
             // Remove old error messages
             document.querySelectorAll(`.${_mgsFrmFieldName}_error`).forEach(el => el.remove());
-            document.querySelectorAll(`.${__mgsFrmFieldName1}`).forEach(el => el.remove());
+            document.querySelectorAll(`.${_mgsFrmFieldName1}`).forEach(el => el.remove());
 
             _mgsFrmField.classList.remove('is-invalid', 'is-valid');
             const value = (_mgsFrmField.value || "").trim();
             if (!value) {
                 const nextEl = _mgsFrmField.nextElementSibling;
                 if (nextEl && nextEl.classList.contains('chosen-container')) {
-                    nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required!</div>`);
+                    nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required</div>`);
                     nextEl.classList.add('is-invalid');
                 } else if (nextEl && nextEl.classList.contains('select2-container')) {
-                    nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required!</div>`);
+                    nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required</div>`);
                     nextEl.classList.add('is-invalid');
                 } else {
-                    _mgsFrmField.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${_mgsFrmFieldName}_error" id="${_mgsFrmFieldName}_error">This field is required!</div>`);
+                    _mgsFrmField.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${_mgsFrmFieldName}_error" id="${_mgsFrmFieldName}_error">This field is required</div>`);
                 }
                 _mgsFrmField.classList.add('is-invalid');
 
@@ -218,7 +221,7 @@ function mgsFormValidate(byNames = null, sameClass = null, byClassId = null) {
 
     // Helper: add error after a field
     const addError = (field, errorId) => {
-        const errorHtml = `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required!</div>`;
+        const errorHtml = `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required</div>`;
         field.insertAdjacentHTML('afterend', errorHtml);
         field.classList.add('is-invalid');
     };
@@ -248,10 +251,10 @@ function mgsFormValidate(byNames = null, sameClass = null, byClassId = null) {
                     // For chosen/select2 handling
                     const nextEl = field.nextElementSibling;
                     if (nextEl && nextEl.classList.contains('chosen-container')) {
-                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required!</div>`);
+                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required</div>`);
                         nextEl.classList.add('is-invalid');
                     } else if (nextEl && nextEl.classList.contains('select2-container')) {
-                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required!</div>`);
+                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required</div>`);
                         nextEl.classList.add('is-invalid');
                     } else {
                         addError(field, errorId);
@@ -283,9 +286,9 @@ function mgsFormValidate(byNames = null, sameClass = null, byClassId = null) {
                 if (!value) {
                     const nextEl = field.nextElementSibling;
                     if (nextEl && nextEl.classList.contains('chosen-container')) {
-                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required!</div>`);
+                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required</div>`);
                     } else if (nextEl && nextEl.classList.contains('select2-container')) {
-                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required!</div>`);
+                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required</div>`);
                     } else {
                         addError(field, errorId);
                     }
@@ -309,9 +312,9 @@ function mgsFormValidate(byNames = null, sameClass = null, byClassId = null) {
                 if (!value) {
                     const nextEl = field.nextElementSibling;
                     if (nextEl && nextEl.classList.contains('chosen-container')) {
-                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required!</div>`);
+                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required</div>`);
                     } else if (nextEl && nextEl.classList.contains('select2-container')) {
-                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required!</div>`);
+                        nextEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${errorId}" id="${errorId}">This field is required</div>`);
                     } else {
                         addError(field, errorId);
                     }
@@ -330,26 +333,83 @@ function mgsFormValidate(byNames = null, sameClass = null, byClassId = null) {
     return _mgsFrmcheck;
 }
 
+function mgsShowMessage(message, type = 'success', time=4000) {
+    let mgsMessageBox = document.getElementById('_mgsMessage');
+    if (!mgsMessageBox) {
+        mgsMessageBox = document.createElement('div');
+        mgsMessageBox.id = '_mgsMessage';
+        mgsMessageBox.style.position = 'fixed';
+        mgsMessageBox.style.top = '20px';
+        mgsMessageBox.style.right = '20px';
+        mgsMessageBox.style.zIndex = '99999';
+        mgsMessageBox.style.padding = '15px 20px';
+        mgsMessageBox.style.borderRadius = '5px';
+        mgsMessageBox.style.minWidth = '200px';
+        mgsMessageBox.style.mgsMessageBoxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+        mgsMessageBox.style.fontFamily = 'Arial, sans-serif';
+        document.body.appendChild(mgsMessageBox);
+    }
+
+    mgsMessageBox.style.display = 'block';
+    mgsMessageBox.innerText = message;
+    mgsMessageBox.style.background = type === 'success' ? '#03741dff' : '#b30b1bff';
+    mgsMessageBox.style.color = '#ffff';
+    mgsMessageBox.style.border = type === 'success' ? '1px solid #03741dff' : '1px solid #b30b1bff';
+    setTimeout(() => {
+        mgsMessageBox.style.display = 'none';
+    }, time);
+}
+
 function msgSubmitData(data) {
     let {url, returnUrl, formId, formData, methodType, bearerToken} =  data;
+    let _mgsReturnUrl = true;
     methodType = (methodType)?methodType:'post';
     if(!url){
-        alert('URL is required.');
+        mgsShowMessage('URL is required', 'error');
         return;
     }
     if(!returnUrl){
+        _mgsReturnUrl = false;
         returnUrl = url;
     }
+    
     if(!formId){
-        alert('Form ID is required.');
+        mgsShowMessage('Form ID is required', 'error');
         return;
     }
 
-    const _mgsFrmIsPost = methodType.toLowerCase() === 'post';
     // Prepare headers and body
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     if (bearerToken) headers.append("Authorization", `Bearer ${bearerToken}`);
+
+    const form = document.querySelector(formId);
+    const submitButton = form.querySelector('[type="submit"]');
+
+    // Disable submit button
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.dataset.originalText = submitButton.innerHTML;
+        submitButton.innerHTML = 'Submitting...';
+    }
+
+    // Create loader dynamically
+    const loader = document.createElement('div');
+    loader.id = '_mgsLoader';
+    loader.style.position = 'fixed';
+    loader.style.top = 0;
+    loader.style.left = 0;
+    loader.style.right = 0;
+    loader.style.bottom = 0;
+    loader.style.background = 'rgba(255,255,255,0.6)';
+    loader.style.zIndex = '9999';
+    loader.style.display = 'flex';
+    loader.style.alignItems = 'center';
+    loader.style.justifyContent = 'center';
+    loader.innerHTML = `<div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden"></span>
+    </div>`;
+    document.body.appendChild(loader);
 
     fetch(url, {
         method: methodType,
@@ -361,6 +421,7 @@ function msgSubmitData(data) {
         try {
             result = JSON.parse(res);
         } catch (e) {
+            mgsShowMessage('Invalid JSON: ' ?? 'Internal server error', 'error');
             console.error("Invalid JSON:", res);
             return;
         }
@@ -369,13 +430,38 @@ function msgSubmitData(data) {
         document.querySelectorAll('.error_field').forEach(el => el.textContent = '');
 
         if (result.status) {
-            alert(result.message)
-            document.querySelector(formId).reset();
-            setTimeout(() => {
-                window.location.href = returnUrl;
-            }, 1000);
+            mgsShowMessage(result?.message ?? 'Data saved successfully', 'success');
+            const _mgsFrmformEl = document.querySelector(formId);
+            if (_mgsFrmformEl) {
+                _mgsFrmformEl.reset();
+
+                const elements = _mgsFrmformEl.querySelectorAll('input, select, textarea');
+                elements.forEach(el => {
+                    el.classList.remove('is-valid', 'is-invalid');
+                    if (el.type === 'checkbox' || el.type === 'radio') {
+                        el.checked = false;
+                    }
+                });
+
+                // Reset Chosen selects
+                const chosenElements = _mgsFrmformEl.querySelectorAll('select.chosen-select');
+                chosenElements.forEach(select => {
+                    $(select).val('').trigger('chosen:updated');
+                });
+
+                // Reset Select2 selects
+                const select2Elements = _mgsFrmformEl.querySelectorAll('select.select2');
+                select2Elements.forEach(select => {
+                    $(select).val(null).trigger('change'); // null for placeholder reset
+                });
+            }
+            if(_mgsReturnUrl){
+                setTimeout(() => {
+                    window.location.href = returnUrl;
+                }, 1000);
+            }
         } else {
-            alert(result.message)
+            mgsShowMessage(result?.message ?? 'Something went wrong', 'error');
             if (result.error) {
                 for (let index in result.error) {
                     const err = result.error[index];
@@ -386,28 +472,28 @@ function msgSubmitData(data) {
                     // Input fields
                     const inputEl = document.querySelector(`input[name="${index}"]`);
                     if (inputEl) {
-                        inputEl.insertAdjacentHTML('afterend', `<div class="text-danger ${index}_error" id="${index}_error">${err}!</div>`);
+                        inputEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${index}_error" id="${index}_error">${err}</div>`);
                     }
 
                     // Textarea fields
                     const textareaEl = document.querySelector(`textarea[name="${index}"]`);
                     if (textareaEl) {
-                        textareaEl.insertAdjacentHTML('afterend', `<div class="text-danger ${index}_error" id="${index}_error">${err}!</div>`);
+                        textareaEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${index}_error" id="${index}_error">${err}</div>`);
                     }
 
                     // Checkbox fields
                     const checkboxEl = document.querySelector(`input[type="checkbox"][name="${index}"]`);
                     if (checkboxEl) {
-                        checkboxEl.insertAdjacentHTML('afterend', `<div class="text-danger ${index}_error" id="${index}_error">${err}!</div>`);
+                        checkboxEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${index}_error" id="${index}_error">${err}</div>`);
                     }
 
                     // Select fields
                     const selectEl = document.querySelector(`select[name="${index}"]`);
                     if (selectEl) {
                         if (selectEl.nextElementSibling && selectEl.nextElementSibling.classList.contains('chosen-container')) {
-                            selectEl.nextElementSibling.insertAdjacentHTML('afterend', `<div class="text-danger ${index}_error" id="${index}_error">${err}!</div>`);
+                            selectEl.nextElementSibling.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${index}_error" id="${index}_error">${err}</div>`);
                         } else {
-                            selectEl.insertAdjacentHTML('afterend', `<div class="text-danger ${index}_error" id="${index}_error">${err}!</div>`);
+                            selectEl.insertAdjacentHTML('afterend', `<div style="font-size:0.875em; color:red;" class="${index}_error" id="${index}_error">${err}</div>`);
                         }
                     }
                 }
@@ -415,8 +501,17 @@ function msgSubmitData(data) {
         }
     })
     .catch(err => {
-        console.error(err);
-    });
+        mgsShowMessage(err?.message ?? 'Internal server error', 'error');
+    })
+    .finally(() => {
+        const loader = document.getElementById('_mgsLoader');
+        if (loader) loader.remove();
+
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.innerHTML = submitButton.dataset.originalText || 'Submit';
+        }
+    });;
 }
 
 // Export globally for UMD/IIFE
@@ -429,13 +524,14 @@ window.mgsA2Zspace = mgsA2Zspace;
 window.mgsA2Z = mgsA2Z;
 window.mgsa2Zspace = mgsa2Zspace;
 window.mgsa2Z = mgsa2Z;
-window.mgsisValidEmail = mgsisValidEmail;
+window.mgsIsValidEmail = mgsIsValidEmail;
 window.mgsValidateEmail = mgsValidateEmail;
-window.mgsKeyupChange = mgsKeyupChange;
+window.mgsCheckRequired = mgsCheckRequired;
 window.mgsFormValidate = mgsFormValidate;
+window.mgsShowMessage = mgsShowMessage;
 window.msgSubmitData = msgSubmitData;
 
 // If using modules
-export { mgsOnlyNumber, mgsNumberDot, mgsCutCopyPaste, mgsa2zSpace, mgsa2z, mgsA2Zspace, mgsA2Z, mgsa2Zspace, mgsa2Z, mgsisValidEmail, mgsValidateEmail, mgsKeyupChange, mgsFormValidate, msgSubmitData };
+export { mgsOnlyNumber, mgsNumberDot, mgsCutCopyPaste, mgsa2zSpace, mgsa2z, mgsA2Zspace, mgsA2Z, mgsa2Zspace, mgsa2Z, mgsIsValidEmail, mgsValidateEmail, mgsCheckRequired, mgsFormValidate, mgsShowMessage, msgSubmitData };
 
 

@@ -1,136 +1,180 @@
-mgsFormValidation
+# 🧪 mgsformvalidation
 
-A lightweight JavaScript form validation and utility library for quick input validation, event handling, and form submission with error handling.
-All functions are globally available via window.
+A lightweight JavaScript library form validation and utility library for quick **input validation**, **event handling**, and **form submission** with built-in error handling - all with minimal setup and no external dependencies..
 
-Installation
-npm install mgsformvalidation
+All functions are globally accessible via window.
 
-Available Functions
-## 1. mgsOnlyNumber
+# 🚀 Available Functions
+
+## You can use single or multiple selectors:
+```
+    let selector = ".name";
+    let selector1 = ".name, .email, .mobile, .gender";
+    let selector2 = "#name, #email, #mobile, #gender";
+    let selector3 = ".name, #email, #mobile, .gender";
+```
+
+## 1. mgsOnlyNumber(selector)
 
 Restricts input to numbers only.
-mgsOnlyNumber('#phone')
-or
-mgsOnlyNumber('#phone, #pin');
 
+```
+    Example:
 
-Example:
+    mgsOnlyNumber('#phone');
+     or
+    mgsOnlyNumber('#phone, #pin');
+```
 
-mgsOnlyNumber('#phone');
+## 2. mgsNumberDot(selector)
 
-## 2. mgsNumberDot
+Allows numbers and a dot (.) — useful for decimal values.
 
-Allows numbers and a dot (.) (useful for decimal values).
+## 3. mgsCutCopyPaste(selector)
 
-mgsNumberDot(selector);
+Disables cut, copy, and paste actions on selected input(s).
 
-## 3. mgsCutCopyPaste
+## 4. mgsa2zSpace(selector)
 
-Disables cut, copy, and paste for the selected input(s).
+Allows lowercase letters (a–z) and spaces.
 
-mgsCutCopyPaste(selector);
-
-## 4. mgsa2zSpace
-
-Allows lowercase letters (a-z) and spaces.
-
-mgsa2zSpace('#name');
-
-## 5. mgsa2z
+## 5. mgsa2z(selector)
 
 Allows lowercase letters only.
 
-mgsa2z('#username');
+## 6. mgsA2Zspace(selector)
 
-## 6. mgsA2Zspace
+Allows uppercase letters (A–Z) and spaces.
 
-Allows uppercase letters (A-Z) and spaces.
-
-mgsA2Zspace('#title');
-
-## 7. mgsA2Z
+## 7. mgsA2Z(selector)
 
 Allows uppercase letters only.
 
-mgsA2Z('#code');
-
-## 8. mgsa2Zspace
+## 8. mgsa2Zspace(selector)
 
 Allows both lowercase and uppercase letters with spaces.
 
-mgsa2Zspace('#fullname');
-
-## 9. mgsa2Z
+## 9. mgsa2Z(selector)
 
 Allows both lowercase and uppercase letters without spaces.
 
-mgsa2Z('#name');
+## 10. mgsIsValidEmail(email)
 
-## 10. mgsisValidEmail
-
-Checks if the provided email is valid.
-
-let isValid = mgsisValidEmail('test@example.com');
-
-## 11. mgsValidateEmail
-
-Validates one or multiple email input fields by selector.
-
-let check = mgsValidateEmail('.email, .emails');
-
-## 12. mgsKeyupChange
-
-Attaches an event listener to trigger a function on both keyup and change.
-let allfields = ('.name,.email,.mobile,.image');
-mgsKeyupChange(allfields);
-
-## 13. mgsFormValidate
-
-# Performs full form validation based on input attributes and rules.
-
-let allfields = ('.name,.email,.mobile,.image');
-let checkValidate = mgsFormValidate('#myForm');
-check it
-
-if(checkValidate){
-    // logic here
-}
-
-## 14. msgSubmitData
-
-# Submits form data via AJAX with loader, validation error handling, and redirect.
+Checks whether a given email is valid.
 
 ```
-    Example Usage
-    let allfields = ('.name,.email,.mobile,.image');
+    Example:
+
+    let isValid = mgsIsValidEmail('test@example.com');
+```
+
+## 11. mgsValidateEmail(selector)
+
+Validates one or more email input fields using a selector.
+
+```
+    Example:
+
+    let check = mgsValidateEmail('.email'); // This function return true or false
+```
+
+## 12. mgsShowMessage(message, type='success', time=4000)
+
+Validates one or more email input fields using a selector.
+
+```
+    Example:
+
+    // type and time Optional, type default is success, time default is 4000ms.
+    mgsShowMessage('Data saved successfully'); 
+    mgsShowMessage('Data saved successfully', 'success', 4000); 
+    mgsShowMessage('Something went wrong', 'error', 4000); 
+```
+
+## 13. mgsCheckRequired(selector)
+
+Attaches event listeners on keyup and change to track required fields.
+
+# ⚠️ Note: This function should always be called first before using any other validation function.
+
+```
+    Example:
+
+    let selector = ".name, .email, .mobile, .image";
+    mgsCheckRequired(selector);
+```
+
+## 14. mgsFormValidate(selector)
+
+Performs full form validation based on input attributes and rules.
+
+Returns true if required fields are filled; otherwise, returns false.
+
+```
+    Example:
+
+    let selector = ".name, .email, .mobile, .image";
+    let isValid = mgsFormValidate(selector);
+
+    if (isValid) {
+        // Proceed with form submission
+    }
+```
+
+## 15. msgSubmitData(config)
+
+Submits form data via fetch, with a loader, error handling, and redirect.
+
+```
+    Example:
+
+    Note:  When form submition time get any errors 
+
+    Error response - 
+    {
+        "status": false,
+        "error": {
+            "name": "The name is required.",
+            "email": "The email has already been taken.",
+            "username": "The username has already been taken."
+        },
+        "message": "Something went wrong, Please try again!"
+    }
+
+    let selector = '.name, .email, .mobile, .image';
+    mgsCheckRequired(selector); // Always call this first
     mgsOnlyNumber('#phone');
     mgsValidateEmail('.email, .emails');
 
-    if (mgsFormValidate(allfields)) {
+    if (mgsFormValidate(selector)) {
         msgSubmitData({
-            url:'http://localhost/mgs/user-add',    // API endpoint
-            returnUrl:'http://localhost/mgs/user',  // Redirect URL after success
-            formId:'$myForm',   // Form selector
-            formData:{}    // FormData object,
-            methodType: 'post'
+            url: 'http://localhost/mgs/user-add',     // API endpoint
+            returnUrl: 'http://localhost/mgs/user',   // Redirect URL after success
+            formId: '$myForm',                        // Form selector
+            formData: {},                             // FormData object
+            methodType: 'post'                        // Optional (default is 'post')
         });
     }
 ```
 
+## 🌐 Usage via CDN
 
-## 📄 Usage via CDN
+# Note:
 
 ```
-<!DOCTYPE html>
+    In your HTML, you can use the same value for class, id, and name like:
+    <input type="text" class="name" id="name" name="name">
+```
+
+```
+    <!DOCTYPE html>
     <html>
     <head>
-        <title>mgsformvalidation</title>
-        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.3/dist/mgsformvalidation.min.js"></script>
+        <title>mgsFormValidation</title>
+        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.4/dist/mgsformvalidation.min.js"></script>
     </head>
     <body>
-        <!--  write a class, id and and attribute are same as "class="name" id="name" name="name""-->
-        <form metho="post" action="javascript:void(0)" id="myForm" enctype="multipart/form-data">
+        <form method="post" action="javascript:void(0)" id="myForm" enctype="multipart/form-data">
             <div class="form-group col-md-4">
                 <label for="name" class="text-heading">Name</label>
                 <input type="text" class="form-control name" id="name" placeholder="Name" name="name">
@@ -138,32 +182,32 @@ if(checkValidate){
             <div class="form-group col-md-4">
                 <label for="email" class="text-heading">Email</label>
                 <input type="email" class="form-control email" id="email" placeholder="Email" name="email">
-            </div> 
+            </div>
             <div class="form-group col-md-4">
                 <label for="mobile" class="text-heading">Mobile</label>
-                <input type="text" class="form-control mobile" id="mobile" placeholder="mobile" name="mobile">
-            </div>  
+                <input type="text" class="form-control mobile" id="mobile" placeholder="Mobile" name="mobile">
+            </div>
             <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary"> Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
 
         <script>
-            let allfields = ('.name,.email,.mobile');
-            mgsKeyupChange(allfields); // always all first then call other functuin -
+            let selector = ".name, .email, .mobile";
+            mgsCheckRequired(selector); // Call first
             mgsOnlyNumber('#phone');
-            mgsValidateEmail('.email, .emails');
+            mgsValidateEmail(".email, .emails");
 
-            document.querySelector('#form_submit').addEventListener('submit', function (e) {
-                var form_data = new FormData(this);
-                if (mgsFormValidate(allfields)) {
-                    e.preventDefault();
+            document.querySelector('#myForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (mgsFormValidate(selector)) {
+                    let form_data = new FormData(this);
                     msgSubmitData({
-                        url:'http://localhost/mgs/user-add',    // API endpoint
-                        returnUrl:'http://localhost/mgs/user',  // Redirect URL after success
-                        formId:'$myForm',   // Form selector
-                        formData:{}    // FormData object,
-                        methodType: 'post' // Optional, default is post
+                        url: 'http://localhost/mgs/user-add',
+                        returnUrl: 'http://localhost/mgs/user',
+                        formId: '$myForm',
+                        formData: form_data,
+                        methodType: 'post'
                     });
                 }
             });
@@ -172,25 +216,20 @@ if(checkValidate){
     </html>
 ```
 
+# 📦 Installation via NPM -
 
-## 📦 Installation via NPM
+npm install mgsformvalidation
 
-```bash
-npm install mgsdatatable
+## 🧩 Usage with ES Modules
 
-```
-## after installation then use it-
-
-## Example Usage (ES Module) -
 ```
     <!DOCTYPE html>
     <html>
     <head>
-        <title>mgsformvalidation</title>
+        <title>mgsFormValidation</title>
     </head>
     <body>
-        <!--  write a class, id and and attribute are same as "class="name" id="name" name="name""-->
-        <form metho="post" action="javascript:void(0)" id="myForm" enctype="multipart/form-data">
+        <form method="post" action="javascript:void(0)" id="myForm" enctype="multipart/form-data">
             <div class="form-group col-md-4">
                 <label for="name" class="text-heading">Name</label>
                 <input type="text" class="form-control name" id="name" placeholder="Name" name="name">
@@ -198,39 +237,38 @@ npm install mgsdatatable
             <div class="form-group col-md-4">
                 <label for="email" class="text-heading">Email</label>
                 <input type="email" class="form-control email" id="email" placeholder="Email" name="email">
-            </div> 
+            </div>
             <div class="form-group col-md-4">
                 <label for="mobile" class="text-heading">Mobile</label>
-                <input type="text" class="form-control mobile" id="mobile" placeholder="mobile" name="mobile">
-            </div>  
+                <input type="text" class="form-control mobile" id="mobile" placeholder="Mobile" name="mobile">
+            </div>
             <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary"> Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
 
         <script type="module">
-            import {mgsOnlyNumber, mgsValidateEmail, mgsFormValidate, msgSubmitData} from 'mgsformvalidation';
+            import { mgsOnlyNumber, mgsValidateEmail, mgsFormValidate, msgSubmitData, mgsCheckRequired } from 'mgsformvalidation';
 
-            <script>
-            let allfields = ('.name,.email,.mobile,.image');
-            mgsKeyupChange(allfields); // always all first then call other functuin -
+            let selector = ".name, .email, .mobile";
+            mgsCheckRequired(selector); // Call first
             mgsOnlyNumber('#phone');
-            mgsValidateEmail('.email, .emails');
+            mgsValidateEmail(".email, .emails");
 
-            document.querySelector('#form_submit').addEventListener('submit', function (e) {
-                var form_data = new FormData(this);
-                if (mgsFormValidate(allfields)) {
-                    e.preventDefault();
+            document.querySelector('#myForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                if (mgsFormValidate(selector)) {
+                    let form_data = new FormData(this);
                     msgSubmitData({
-                        url:'http://localhost/mgs/user-add',    // API endpoint
-                        returnUrl:'http://localhost/mgs/user',  // Redirect URL after success
-                        formId:'$myForm',   // Form selector
-                        formData:{}    // FormData object,
-                        methodType: 'post' // Optional, default is post
+                        url: 'http://localhost/mgs/user-add',
+                        returnUrl: 'http://localhost/mgs/user',
+                        formId: '$myForm',
+                        formData: form_data,
+                        methodType: 'post'
                     });
                 }
             });
-        </script>
         </script>
     </body>
     </html>
