@@ -80,8 +80,6 @@ Validates one or more email input fields using a selector.
 
 ## 12. mgsShowMessage(message, type='success', time=4000)
 
-Validates one or more email input fields using a selector.
-
 ```
     Example:
 
@@ -95,7 +93,7 @@ Validates one or more email input fields using a selector.
 
 Attaches event listeners on keyup and change to track required fields.
 
-# ⚠️ Note: This function should always be called first before using any other validation function.
+## ⚠️ Note: This function should always be called first before using any other validation function.
 
 ```
     Example:
