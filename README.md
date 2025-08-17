@@ -102,7 +102,7 @@ Attaches event listeners on keyup and change to track required fields.
     mgsCheckRequired(selector);
 ```
 
-## 14. mgsFormValidate(selector)
+## 14. mgsFormValidate(inputSelector, formSelector)
 
 Performs full form validation based on input attributes and rules.
 
@@ -111,8 +111,8 @@ Returns true if required fields are filled; otherwise, returns false.
 ```
     Example:
 
-    let selector = ".name, .email, .mobile, .image";
-    let isValid = mgsFormValidate(selector);
+    let inputSelector = ".name, .email, .mobile, .image";
+    let isValid = mgsFormValidate(inputSelector, "#myForm");
 
     if (isValid) {
         // Proceed with form submission
@@ -125,6 +125,12 @@ Submits form data via fetch, with a loader, error handling, and redirect.
 
 ```
     Example:
+    response - 
+
+    {
+        "status": true,
+        "message": "Data saved successfully."
+    }
 
     Note:  When the form is submitted and errors are returned, display them
 
@@ -133,10 +139,10 @@ Submits form data via fetch, with a loader, error handling, and redirect.
         "status": false,
         "error": {
             "name": "The name is required.",
-            "email": "The email has already been taken.",
+            "email": "The email has already been taken.",   
             "username": "The username has already been taken."
         },
-        "message": "Something went wrong, Please try again!"
+        "message": "Something went wrong, Please try again."
     }
 
     let selector = '.name, .email, .mobile, .image';
@@ -144,7 +150,7 @@ Submits form data via fetch, with a loader, error handling, and redirect.
     mgsOnlyNumber('#phone');
     mgsValidateEmail('.email, .emails');
 
-    if (mgsFormValidate(selector)) {
+    if (mgsFormValidate(selector,"#myForm")) {
 
         1- Usage Example: Stay on the Same Page
 
@@ -155,7 +161,8 @@ Submits form data via fetch, with a loader, error handling, and redirect.
             url: 'http://localhost/mgs/user-add',     // API endpoint
             formId: '#myForm',                        // Form selector
             formData: {},                             // FormData object
-            methodType: 'post'                        // Optional (default is 'post')
+            methodType: 'post'                        // Optional (default is 'post'),
+            formReset:false                           // Optional (default is true) is is by default form reset after form submition you want to not reset after form submition then use formReset:false ,
         });
 
 
@@ -170,7 +177,8 @@ Submits form data via fetch, with a loader, error handling, and redirect.
             returnUrl: 'http://localhost/mgs/user',   // Redirect URL after success
             formId: '#myForm',                        // Form selector
             formData: {},                             // FormData object
-            methodType: 'post'                        // Optional (default is 'post')
+            methodType: 'post'                        // Optional (default is 'post'),
+            formReset:false                           // Optional (default is true) is is by default form reset after form submition you want to not reset after form submition then use formReset:false ,
         });
 
 
@@ -192,7 +200,7 @@ Submits form data via fetch, with a loader, error handling, and redirect.
     <html>
     <head>
         <title>mgsFormValidation</title>
-        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.6/dist/mgsformvalidation.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.7/dist/mgsformvalidation.min.js"></script>
     </head>
     <body>
         <form method="post" action="javascript:void(0)" id="myForm" enctype="multipart/form-data">
@@ -221,14 +229,15 @@ Submits form data via fetch, with a loader, error handling, and redirect.
 
             document.querySelector('#myForm').addEventListener('submit', function (e) {
                 e.preventDefault();
-                if (mgsFormValidate(selector)) {
+                if (mgsFormValidate(selector, '#myForm')) {
                     let form_data = new FormData(this);
                     msgSubmitData({
                         url: 'http://localhost/mgs/user-add',
                         returnUrl: 'http://localhost/mgs/user',  // Optional — provide this only if you want to redirect to another page after successful submission.
-                        formId: '$myForm',
+                        formId: '#myForm',
                         formData: form_data,
-                        methodType: 'post'
+                        methodType: 'post',
+                        formReset:false                           // Optional (default is true) is is by default form reset after form submition you want to not reset after form submition then use formReset:false ,
                     });
                 }
             });
@@ -279,14 +288,15 @@ npm install mgsformvalidation
             document.querySelector('#myForm').addEventListener('submit', function (e) {
                 e.preventDefault();
 
-                if (mgsFormValidate(selector)) {
+                if (mgsFormValidate(selector, '#myForm')) {
                     let form_data = new FormData(this);
                     msgSubmitData({
                         url: 'http://localhost/mgs/user-add',
                         returnUrl: 'http://localhost/mgs/user', // Optional — provide this only if you want to redirect to another page after successful submission.
                         formId: '$myForm',
                         formData: form_data,
-                        methodType: 'post'
+                        methodType: 'post',
+                        formReset:false                           // Optional (default is true) is is by default form reset after form submition you want to not reset after form submition then use formReset:false ,
                     });
                 }
             });
