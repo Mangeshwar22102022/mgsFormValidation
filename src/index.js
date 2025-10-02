@@ -259,9 +259,9 @@ function mgsCheckRequired(_mgsFrmAllClass, formId=null) {
 }
 
 function mgsFormValidate(byNames = null, formId = null, sameClass = null, byClassId = null) {
-    let _mgsFrmbyNames = byNames?.split(',') ?? [];
-    let _mgsFrmsameClass = sameClass?.split(',') ?? [];
-    let _mgsFrmbyClassId = byClassId?.split(',') ?? [];
+    let _mgsFrmbyNames = (byNames != undefined && byNames != null && byNames != '')? byNames?.split(',') ?? [] : [];
+    let _mgsFrmsameClass = (sameClass != undefined && sameClass != null && sameClass != '')? sameClass?.split(',') ?? [] : [];
+    let _mgsFrmbyClassId = (byClassId != undefined && byClassId != null && byClassId != '')? byClassId?.split(',') ?? [] : [];
     if(_mgsFrmbyNames?.length == 0 && _mgsFrmsameClass?.length  == 0 && _mgsFrmbyClassId?.length == 0){
         mgsShowMessage('Selector is required in function mgsFormValidate', 'error');
         return;
@@ -284,7 +284,7 @@ function mgsFormValidate(byNames = null, formId = null, sameClass = null, byClas
         _mgsFrmbyClassId = _mgsFrmbyClassId?.map((cidnm) => cidnm?.trim());
     }
     if(_mgsFrmFeilds?.length > 0){
-        flattened = _mgsFrmFeilds.flat();
+        let flattened = _mgsFrmFeilds.flat();
         _msgFrmSameClass = [...new Set(flattened.map(item => item.trim()))];
     }
 

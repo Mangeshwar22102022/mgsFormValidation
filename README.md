@@ -200,7 +200,7 @@ Submits form data via fetch, with a loader, error handling, and redirect.
     <html>
     <head>
         <title>mgsFormValidation</title>
-        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.7/dist/mgsformvalidation.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.8/dist/mgsformvalidation.min.js"></script>
     </head>
     <body>
         <form method="post" action="javascript:void(0)" id="myForm" enctype="multipart/form-data">
