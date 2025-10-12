@@ -4,6 +4,26 @@ A lightweight JavaScript form validation and utility library for quick **input v
 
 All functions are globally accessible via window.
 
+# Demo
+
+## 🧠 Example — Single Validation (Whole Form with Single Input Name)
+
+Below is an example UI demonstrating how form fields are validated when all inputs share the same class name — meaning the entire form is treated as one validation group.
+
+This setup ensures that every input with the same class (for example, .name, .email, .mobile, .image) is checked together before submission, making it ideal for single-form validation.
+
+![Add More Validation Example](public/images/validate.png)
+
+
+## 🧠 Example — Add More Validation
+
+Below is an example UI demonstrating how multiple dynamic fields are validated using the “Add More” functionality.
+
+This setup ensures that each dynamically added input group is validated individually — making it ideal for forms where users can add multiple entries (e.g., multiple name, email, mobile, and image).
+
+![Add More Validation Example](public/images/multiple_validate.png)
+
+
 # 🚀 Available Functions
 
 ## You can use single or multiple selectors:
@@ -58,7 +78,36 @@ Allows both lowercase and uppercase letters with spaces.
 
 Allows both lowercase and uppercase letters without spaces.
 
-## 10. mgsIsValidEmail(email)
+## 10. mgsAlphaNumeric(selector)
+
+Allows alphanumeric.
+
+## 11. mgsCustomValidation(selector)
+
+Allows alphanumeric with spaces
+
+## 12. mgsCustomValidation(selector)
+
+By default, it allows alphanumeric characters (A–Z, a–z, 0–9).
+You can customize allowed characters using the regex parameter.
+
+```
+    Custom Usage Examples:
+
+    Allow only numbers -
+    mgsCustomValidation('.onlyNumber', '0-9');
+
+    Allow only letters -
+    mgsCustomValidation('.onlyLetter', 'a-zA-Z');
+
+    Allow alphanumeric and underscore -
+    mgsCustomValidation('.alphaUnderscore', '0-9a-zA-Z_');
+
+    Allow alphanumeric and space -
+    mgsCustomValidation('.alphaSpace', '0-9a-zA-Z ');
+```
+
+## 13. mgsIsValidEmail(email)
 
 Checks whether a given email is valid.
 
@@ -68,7 +117,7 @@ Checks whether a given email is valid.
     let isValid = mgsIsValidEmail('test@example.com');
 ```
 
-## 11. mgsValidateEmail(selector)
+## 15. mgsValidateEmail(selector)
 
 Validates one or more email input fields using a selector.
 
@@ -78,7 +127,7 @@ Validates one or more email input fields using a selector.
     let check = mgsValidateEmail('.email'); // This function return true or false
 ```
 
-## 12. mgsShowMessage(message, type='success', time=4000)
+## 16. mgsShowMessage(message, type='success', time=4000)
 
 ```
     Example:
@@ -89,24 +138,63 @@ Validates one or more email input fields using a selector.
     mgsShowMessage('Something went wrong', 'error', 4000); 
 ```
 
-## 13. mgsCheckRequired(selector)
+## 17. mgsCheckRequired(selector,showBorderError = false, sameInputFieldClass = null, formId = null)
 
-Attaches event listeners on keyup and change to track required fields.
+Attaches keyup and change event listeners to input fields for tracking required values dynamically.
+This function helps ensure that all marked fields are filled before form submission.
 
-## ⚠️ Note: This function should always be called first before using any other validation function.
+## ⚠️ Note:     
+    This function should always be called first before using any other validation functions.
+    It initializes the base validation tracking system for required inputs
+
+## 🧠 Function Parameters
+
+```
+    selector - reqired
+        selector for input fields to validate (e.g., .name, .email).
+
+    showBorderError - By Default false
+        If false, shows both error message and red border for invalid fields. If true, shows only border highlight.
+
+    sameInputFieldClass - By Default null
+        The sameInputFieldClass parameter is used when you have multiple repeated input groups — for example, in “Add More” functionality where you clone input fields dynamically (like multiple product rows, images, or contact entries).
+
+    formId - By Default null
+        Optional specific form ID if validation should be scoped to one form.
+```
 
 ```
     Example:
-
     let selector = ".name, .email, .mobile, .image";
+
+    1 - Show error message with input border highlight using - 
     mgsCheckRequired(selector);
+
+    2 - Show only input border highlight using- 
+    mgsCheckRequired(selector, false); 
+
+    3 - Show only input border highlight using- 
+    mgsCheckRequired(selector, false); 
 ```
 
-## 14. mgsFormValidate(inputSelector, formSelector)
+## 18. mgsFormValidate(inputSelector, formSelector, inputSameClass=null)
 
 Performs full form validation based on input attributes and rules.
 
 Returns true if required fields are filled; otherwise, returns false.
+
+## 🧠 Function Parameters
+
+```
+    selector - reqired
+        selector for input fields to validate (e.g., .name, .email).
+
+    inputSameClass - By Default null
+        The inputSameClass parameter is used when you have multiple repeated input groups — for example, in “Add More” functionality where you clone input fields dynamically (like multiple product rows, images, or contact entries).
+
+    formId - By Default null
+        Optional specific form ID if validation should be scoped to one form.
+```
 
 ```
     Example:
@@ -119,7 +207,7 @@ Returns true if required fields are filled; otherwise, returns false.
     }
 ```
 
-## 15. msgSubmitData(config)
+## 19. msgSubmitData(config)
 
 Submits form data via fetch, with a loader, error handling, and redirect.
 
@@ -200,7 +288,7 @@ Submits form data via fetch, with a loader, error handling, and redirect.
     <html>
     <head>
         <title>mgsFormValidation</title>
-        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.8/dist/mgsformvalidation.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.9/dist/mgsformvalidation.min.js"></script>
     </head>
     <body>
         <form method="post" action="javascript:void(0)" id="myForm" enctype="multipart/form-data">
