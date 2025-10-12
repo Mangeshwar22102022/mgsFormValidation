@@ -234,12 +234,12 @@ const _mgsCheckAllFieldValidation = (value, field, nextEl, errorHtml, isElse = t
     }
 } 
 
-function mgsCheckSameRequired(_mgsFrmSamelass, showBorderError=false, formId=null){ // same class validation check
+function mgsCheckSameRequired(mgsFrmSamelass, showBorderError=false, formId=null){ // same class validation check
     _mgsShowBorderError = showBorderError;
     let checkSameCount = true;
-    _mgsFrmsameClass = (_mgsFrmSamelass != undefined && _mgsFrmSamelass != null && _mgsFrmSamelass != '')? _mgsFrmSamelass?.split(',') ?? [] : [];
-    if (_mgsFrmsameClass.length !== 0) {
-        _mgsFrmsameClass.forEach((classSelector, key) => {
+    let mgsFrmsameClass = (mgsFrmSamelass != undefined && mgsFrmSamelass != null && mgsFrmSamelass != '')? mgsFrmSamelass?.split(',') ?? [] : [];
+    if (mgsFrmsameClass.length !== 0) {
+        mgsFrmsameClass.forEach((classSelector, key) => {
             let fields = _mgsGetAllFields(classSelector, formId);
             if(checkSameAllLength[key] != fields.length){
                 checkSameAllLength[key] = fields.length;

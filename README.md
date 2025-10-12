@@ -6,22 +6,22 @@ All functions are globally accessible via window.
 
 # Demo
 
-## 🧠 Example — Single Validation (Whole Form with Single Input Name)
+## Example — Single Validation (Whole Form with Single Input Name)
 
 Below is an example UI demonstrating how form fields are validated when all inputs share the same class name — meaning the entire form is treated as one validation group.
 
 This setup ensures that every input with the same class (for example, .name, .email, .mobile, .image) is checked together before submission, making it ideal for single-form validation.
 
-![Add More Validation Example](public/images/validate.png)
+![Add More Validation Example](https://raw.githubusercontent.com/Mangeshwar22102022/mgsFormValidation/mangesh/public/images/validate.png)
 
 
-## 🧠 Example — Add More Validation
+## Example — Add More Validation
 
 Below is an example UI demonstrating how multiple dynamic fields are validated using the “Add More” functionality.
 
 This setup ensures that each dynamically added input group is validated individually — making it ideal for forms where users can add multiple entries (e.g., multiple name, email, mobile, and image).
 
-![Add More Validation Example](public/images/multiple_validate.png)
+![Add More Validation Example](https://raw.githubusercontent.com/Mangeshwar22102022/mgsFormValidation/mangesh/public/images/multiple_validate.png)
 
 
 # 🚀 Available Functions
@@ -288,7 +288,7 @@ Submits form data via fetch, with a loader, error handling, and redirect.
     <html>
     <head>
         <title>mgsFormValidation</title>
-        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.9/dist/mgsformvalidation.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mgsformvalidation@1.0.10/dist/mgsformvalidation.min.js"></script>
     </head>
     <body>
         <form method="post" action="javascript:void(0)" id="myForm" enctype="multipart/form-data">
