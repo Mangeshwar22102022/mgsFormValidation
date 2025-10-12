@@ -265,7 +265,7 @@ function mgsCheckSameRequired(mgsFrmSamelass, showBorderError=false, formId=null
     }
     if(!checkSameCount){
         setInterval(() => {
-            mgsCheckSameRequired(_mgsFrmSamelass, showBorderError, formId)
+            mgsCheckSameRequired(mgsFrmSamelass, showBorderError, formId)
         }, 2500);  
     }
 }
